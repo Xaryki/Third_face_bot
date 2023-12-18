@@ -11,19 +11,31 @@ let capturedImageData = true;
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram && window.Telegram.WebApp) {
-        Telegram.WebApp.MainButton.show();
+        Telegram.WebApp.MainButton.hide();
+        Telegram.WebApp.expand();
+
+        const captureButton = document.getElementById('captureButton');
+        captureButton.addEventListener('click', function() {
+            capturedImageData = capturePhoto();
+            Telegram.WebApp.MainButton.show();
+            Telegram.WebApp.MainButton.setText('Отправить');
+        });
 
         Telegram.WebApp.MainButton.onClick(() => {
-            console.log("MainButton нажата");
-            try {
-                Telegram.WebApp.close();
-                console.log("Выполнен запрос на закрытие Mini App");
-            } catch (error) {
-                console.error("Ошибка при попытке закрыть Mini App:", error);
+            if (capturedImageData) {
+                Telegram.WebApp.close(); // Закрыть Mini App при нажатии на MainButton
             }
         });
-    } else {
-        console.log("Telegram WebApp API не доступен");
+
+        const themeParams = window.Telegram.WebApp.themeParams;
+        Telegram.WebApp.setHeaderColor(themeParams.bg_color);
+        Telegram.WebApp.setBackgroundColor(themeParams.secondary_bg_color);
+
+        Telegram.WebApp.onEvent('viewportChanged', (event) => {
+            if (event.isStateStable) {
+                // Обработка изменения видимой области
+            }
+        });
     }
 });
 
