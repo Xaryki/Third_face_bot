@@ -57,3 +57,30 @@ video {
     border-radius: 10px;
     margin-bottom: 20px;
 }
+
+@media screen and (max-width: 768px) {
+    body, html {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .screen {
+        padding: 10px;
+    }
+
+    .logo {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        padding: 8px 16px;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+
+    video, #previewImage {
+        max-width: 100%;
+        border-width: 3px;
+    }
+}
