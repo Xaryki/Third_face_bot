@@ -64,7 +64,7 @@ function capturePhoto() {
     const canvas = document.createElement('canvas');
 
     // Уменьшение размеров холста для снижения размера изображения
-    const scale = 0.5; // Масштабирование изображения до 50%
+    const scale = 1; // Масштабирование изображения до 100%
     canvas.width = videoElement.videoWidth * scale;
     canvas.height = videoElement.videoHeight * scale;
 
