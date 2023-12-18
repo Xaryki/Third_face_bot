@@ -72,7 +72,7 @@ function capturePhoto() {
     ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
     // Конвертация в Base64 с уменьшенным качеством
-    const quality = 0.7; // 70% качество
+    const quality = 1; // 100% качество
     const base64Image = canvas.toDataURL('image/png', quality);
 
     // Удаление префикса Base64
