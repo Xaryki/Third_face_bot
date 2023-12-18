@@ -17,25 +17,29 @@ document.getElementById('sendButton').addEventListener('click', () => {
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram.WebApp) {
-        // Устанавливаем кнопку основного действия (Main Button)
-        Telegram.WebApp.MainButton.show(); // Показываем кнопку
-        Telegram.WebApp.MainButton.setText('Отправить'); // Устанавливаем текст кнопки
-        Telegram.WebApp.MainButton.onClick(() => { // Обработчик нажатия кнопки
-            // Вы можете добавить здесь вашу логику для обработки нажатия кнопки
-            console.log('Кнопка отправить была нажата');
-        });
+        // Скрываем основную кнопку до нажатия кнопки "Сделать фото"
+        Telegram.WebApp.MainButton.hide();
 
-        // Настраиваем кнопку в зависимости от текущего состояния Mini App
-        Telegram.WebApp.onEvent('viewportChanged', event => {
-            if (event.isStateStable) {
-                Telegram.WebApp.MainButton.setParams({
-                    isVisible: true // Убедитесь, что кнопка видима, когда Mini App находится в стабильном состоянии
-                });
-            }
-        });
+        // Получаем элемент кнопки "Сделать фото" в вашем HTML
+        const captureButton = document.getElementById('captureButton');
+        
+        // Добавляем обработчик события на кнопку "Сделать фото"
+        captureButton.addEventListener('click', function() {
+            // Логика для захвата фотографии
+            // ...
 
-        // Если нужно, расширяем Mini App до максимальной доступной высоты
-        Telegram.WebApp.expand();
+            // После захвата фото, показываем основную кнопку
+            Telegram.WebApp.MainButton.show();
+            Telegram.WebApp.MainButton.setText('Отправить');
+            Telegram.WebApp.MainButton.onClick(() => {
+                // Логика отправки фотографии или другого действия
+                console.log('Кнопка отправить была нажата');
+                // Вызовите здесь функцию для отправки фотографии
+            });
+        });
+        
+        // Настраиваем остальную логику Mini App, если необходимо
+        // ...
     }
 });
 
