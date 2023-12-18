@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         Telegram.WebApp.MainButton.onClick(() => {
             if (capturedImageData) {
-                fetch('/upload', {
+                fetch('/uploads', {
             method: 'POST',
             body: capturedImageData
         })
