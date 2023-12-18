@@ -1,4 +1,3 @@
-/* Общие стили, применяемые ко всему документу */
 body, html {
     margin: 0;
     padding: 0;
@@ -6,45 +5,42 @@ body, html {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #ff4d4d; /* Красный мягкий фон */
+    background-color: #ff4d4d;
     font-family: 'Arial', sans-serif;
-    font-size: 100%; /* Устанавливаем базовый размер шрифта */
+    font-size: 100%;
     color: white;
 }
 
-/* Стили для всех экранов */
 .screen {
-    display: none; /* Скрыты по умолчанию */
+    display: none;
     flex-direction: column;
     align-items: center;
-    padding: 10px; /* Универсальный отступ */
+    padding: 10px;
     text-align: center;
-    width: 100%; /* Позволяет экранам занимать всю ширину */
+    width: 100%;
 }
 
-/* Стили для активного экрана */
 .screen.active {
     display: flex;
-    min-height: 100vh; /* Минимальная высота для поддержания полного экрана */
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-/* Стилизация логотипа */
 .logo {
-    font-size: 4vw; /* Относительный размер шрифта в зависимости от ширины экрана */
+    font-size: 4vw;
     font-weight: bold;
     margin-bottom: 1em;
-    text-transform: uppercase;
 }
 
-/* Стилизация кнопок */
 button {
     background-color: #fff;
     color: #ff4d4d;
     border: none;
-    padding: 1em 2em; /* Адаптивный отступ */
-    margin-top: 1em; /* Отступ сверху */
+    padding: 1em 2em;
+    margin-top: 1em;
     cursor: pointer;
-    font-size: 4vw; /* Адаптивный размер шрифта */
+    font-size: 4vw;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -54,21 +50,19 @@ button:hover {
     color: white;
 }
 
-/* Стилизация элементов мультимедиа */
 video, #previewImage {
-    max-width: 90%; /* Занимает максимум 90% ширины экрана */
-    max-height: 50vh; /* И не более 50% высоты экрана */
+    max-width: 90%;
+    max-height: 50vh;
     border: 3px solid white;
     border-radius: 10px;
 }
 
-/* Медиа-запросы для меньших экранов */
 @media screen and (max-width: 480px) {
     .logo {
-        font-size: 5vw; /* Увеличиваем размер шрифта для маленьких экранов */
+        font-size: 5vw;
     }
 
     button {
-        font-size: 5vw; /* Увеличиваем размер шрифта кнопок */
+        font-size: 5vw;
     }
 }
