@@ -11,7 +11,7 @@ document.getElementById('captureButton').addEventListener('click', () => {
     capturePhoto();
 });
 
-
+// w
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram.WebApp) {
