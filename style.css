@@ -58,7 +58,9 @@ video {
     margin-bottom: 20px;
 }
 
+/* Медиа-запросы для адаптации к мобильным устройствам */
 @media screen and (max-width: 768px) {
+    /* Стили для устройств с шириной экрана до 768px */
     body, html {
         justify-content: flex-start;
         align-items: flex-start;
@@ -78,9 +80,32 @@ video {
         margin-top: 10px;
         font-size: 16px;
     }
+}
+
+/* Медиа-запросы для адаптации к меньшим мобильным устройствам, например, 480px */
+@media screen and (max-width: 480px) {
+    /* Стили для устройств с шириной экрана до 480px */
+    body, html {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .screen {
+        padding: 5px;
+    }
+
+    .logo {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    button {
+        padding: 6px 12px;
+        margin-top: 8px;
+        font-size: 14px;
+    }
 
     video, #previewImage {
-        max-width: 100%;
-        border-width: 3px;
+        border-width: 2px;
     }
 }
