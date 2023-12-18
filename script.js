@@ -23,17 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         Telegram.WebApp.MainButton.onClick(() => {
             if (capturedImageData) {
-                fetch('/uploads', {
-            method: 'POST',
-            body: capturedImageData
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data); // Вывод ответа от сервера в консоль
-        })
-        .catch(error => {
-            console.error('Ошибка при отправке данных:', error);
-        });
                 Telegram.WebApp.close(); // Закрыть Mini App при нажатии на MainButton
             }
         });
