@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         Telegram.WebApp.MainButton.onClick(() => {
             if (capturedImageData) {
-                Telegram.WebApp.sendData(capturedImageData);
+                Telegram.WebApp.close(); // Закрыть Mini App при нажатии на MainButton
             }
         });
 
