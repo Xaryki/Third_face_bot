@@ -12,7 +12,7 @@ document.getElementById('captureButton').addEventListener('click', () => {
 });
 
 document.getElementById('sendButton').addEventListener('click', () => {
-    sendPhotoToServer();
+    sendPhotoToBot();
 });
 
 function showScreen(screenId) {
@@ -47,22 +47,29 @@ function capturePhoto() {
     showScreen('previewScreen');
 }
 
-function sendPhotoToServer() {
+function sendPhotoToBot() {
     const imageData = document.getElementById('previewImage').src;
+    const chat_id = getChatId(); // Получаем chat_id динамически
+    const bot_token = 'ваш_bot_token'; // Токен вашего Telegram бота
+    const telegram_api_url = `https://api.telegram.org/bot${bot_token}/sendPhoto`;
 
-    fetch('URL_вашего_сервера', {
+    let formData = new FormData();
+    formData.append('chat_id', chat_id);
+    formData.append('photo', imageData);
+
+    fetch(telegram_api_url, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ image: imageData })
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Изображение успешно загружено', data);
-        // Обработка успешной загрузки
+        console.log('Изображение отправлено в бота', data);
     })
     .catch(error => {
-        console.error('Ошибка при загрузке изображения', error);
+        console.error('Ошибка при отправке изображения в бота', error);
     });
+}
+function getChatId() {
+    // Ваш код для получения chat_id, например, из URL или временного хранилища
+}
 }
