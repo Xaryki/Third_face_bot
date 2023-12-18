@@ -11,9 +11,19 @@ let capturedImageData = true;
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram && window.Telegram.WebApp) {
+        Telegram.WebApp.MainButton.show();
+
         Telegram.WebApp.MainButton.onClick(() => {
-            Telegram.WebApp.close(); // Закрывает Mini App
+            console.log("MainButton нажата");
+            try {
+                Telegram.WebApp.close();
+                console.log("Выполнен запрос на закрытие Mini App");
+            } catch (error) {
+                console.error("Ошибка при попытке закрыть Mini App:", error);
+            }
         });
+    } else {
+        console.log("Telegram WebApp API не доступен");
     }
 });
 
