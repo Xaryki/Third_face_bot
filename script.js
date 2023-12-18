@@ -82,8 +82,10 @@ function capturePhoto() {
     canvas.width = videoElement.videoWidth;
     canvas.height = videoElement.videoHeight;
     canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+    // Конвертация изображения в строку base64
     const imageData = canvas.toDataURL('image/png');
 
-    document.getElementById('previewImage').src = imageData;
-    showScreen('previewScreen');
+    // Отправка данных боту
+    Telegram.WebApp.sendData(imageData);
 }
