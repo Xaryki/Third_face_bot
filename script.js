@@ -17,6 +17,30 @@ document.getElementById('sendButton').addEventListener('click', () => {
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram.WebApp) {
+        // Устанавливаем кнопку основного действия (Main Button)
+        Telegram.WebApp.MainButton.show(); // Показываем кнопку
+        Telegram.WebApp.MainButton.setText('Отправить'); // Устанавливаем текст кнопки
+        Telegram.WebApp.MainButton.onClick(() => { // Обработчик нажатия кнопки
+            // Вы можете добавить здесь вашу логику для обработки нажатия кнопки
+            console.log('Кнопка отправить была нажата');
+        });
+
+        // Настраиваем кнопку в зависимости от текущего состояния Mini App
+        Telegram.WebApp.onEvent('viewportChanged', event => {
+            if (event.isStateStable) {
+                Telegram.WebApp.MainButton.setParams({
+                    isVisible: true // Убедитесь, что кнопка видима, когда Mini App находится в стабильном состоянии
+                });
+            }
+        });
+
+        // Если нужно, расширяем Mini App до максимальной доступной высоты
+        Telegram.WebApp.expand();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.Telegram.WebApp) {
         // Расширение Mini App до полной высоты
         window.Telegram.WebApp.expand();
 
