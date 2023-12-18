@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOMContentLoaded event triggered");
     if (window.Telegram.WebApp) {
         // Расширение Mini App до полной высоты
         window.Telegram.WebApp.expand();
