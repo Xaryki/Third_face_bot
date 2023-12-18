@@ -72,4 +72,3 @@ function sendPhotoToBot() {
 function getChatId() {
     // Ваш код для получения chat_id, например, из URL или временного хранилища
 }
-
