@@ -68,11 +68,24 @@ function capturePhoto() {
     canvas.height = videoElement.videoHeight;
     canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    const imageData = canvas.toDataURL('image/png');
+    // Получаем данные изображения в формате Base64
+    const base64Image = canvas.toDataURL('image/png');
+
+    // Удаляем префикс Base64 для чистых данных изображения
+    const base64Data = base64Image.split(',')[1];
+
+    // Проверяем размер данных
+    if (base64Data.length <= 4096) {
+        capturedImageData = base64Data;
+    } else {
+        console.error('Изображение слишком большое для отправки');
+        // Обработка слишком больших изображений
+    }
+
     const previewImage = document.getElementById('previewImage');
-    previewImage.src = imageData;
+    previewImage.src = base64Image;
 
     showScreen('previewScreen');
 
-    return imageData;
+    return base64Data;
 }
