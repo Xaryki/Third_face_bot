@@ -15,6 +15,21 @@ document.getElementById('sendButton').addEventListener('click', () => {
     sendPhotoToBot();
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.Telegram.WebApp) {
+        // Расширение Mini App до полной высоты
+        window.Telegram.WebApp.expand();
+
+        // Доступ к различным данным
+        // const initData = window.Telegram.WebApp.initData; // Сырые данные
+        // const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe; // Ненадежные данные
+        // const version = window.Telegram.WebApp.version; // Версия Bot API
+        // ...и так далее для других полей
+
+        // Используйте эти данные в соответствии с вашими потребностями
+    }
+});
+
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
