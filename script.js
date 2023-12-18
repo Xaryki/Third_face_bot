@@ -76,6 +76,8 @@ function startCamera() {
     }
 }
 
+let capturedImageData; // Глобальная переменная для хранения данных изображения
+
 function capturePhoto() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
@@ -83,9 +85,13 @@ function capturePhoto() {
     canvas.height = videoElement.videoHeight;
     canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    // Конвертация изображения в строку base64
-    const imageData = canvas.toDataURL('image/png');
+    // Конвертация изображения в строку base64 и сохранение данных
+    capturedImageData = canvas.toDataURL('image/png');
 
-    // Отправка данных боту
-    Telegram.WebApp.sendData(imageData);
+    // Отображение захваченного изображения
+    const previewImage = document.getElementById('previewImage');
+    previewImage.src = capturedImageData;
+
+    // Показать экран предпросмотра
+    showScreen('previewScreen');
 }
