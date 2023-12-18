@@ -14,9 +14,27 @@ document.addEventListener('DOMContentLoaded', function() {
         Telegram.WebApp.MainButton.hide();
         Telegram.WebApp.expand();
 
-        // Настройка MainButton
+        const captureButton = document.getElementById('captureButton');
+        captureButton.addEventListener('click', function() {
+            capturedImageData = capturePhoto();
+            Telegram.WebApp.MainButton.show();
+            Telegram.WebApp.MainButton.setText('Отправить');
+        });
+
         Telegram.WebApp.MainButton.onClick(() => {
-            Telegram.WebApp.close(); // Закрыть Mini App при нажатии на MainButton
+            if (capturedImageData) {
+                Telegram.WebApp.close();
+            }
+        });
+
+        const themeParams = window.Telegram.WebApp.themeParams;
+        Telegram.WebApp.setHeaderColor(themeParams.bg_color);
+        Telegram.WebApp.setBackgroundColor(themeParams.secondary_bg_color);
+
+        Telegram.WebApp.onEvent('viewportChanged', (event) => {
+            if (event.isStateStable) {
+                // Обработка изменения видимой области
+            }
         });
 
         Telegram.WebApp.enableClosingConfirmation();
