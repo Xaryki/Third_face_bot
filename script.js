@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         Telegram.WebApp.MainButton.onClick(() => {
             if (capturedImageData) {
-                Telegram.WebApp.close();
+                Telegram.WebApp.sendData(capturedImageData);
             }
         });
 
@@ -80,8 +80,12 @@ function capturePhoto() {
     // Удаление префикса Base64
     const base64Data = base64Image.split(',')[1];
 
-    capturedImageData = base64Data;
-    
+    if (base64Data.length <= 4096) {
+        capturedImageData = base64Data;
+    } else {
+        console.error('Изображение всё ещё слишком большое для отправки');
+        // Возможная дополнительная обработка ошибки
+    }
 
     const previewImage = document.getElementById('previewImage');
     previewImage.src = base64Image;
@@ -90,4 +94,3 @@ function capturePhoto() {
 
     return base64Data;
 }
-
