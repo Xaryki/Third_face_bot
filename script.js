@@ -7,7 +7,7 @@ document.getElementById('nextButton').addEventListener('click', () => {
     Telegram.WebApp.sendData(capturedImageData);
 });
 
-let capturedImageData = true;
+let capturedImageData = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram && window.Telegram.WebApp) {
@@ -70,6 +70,16 @@ function capturePhoto() {
 
     const ctx = canvas.getContext('2d');
     ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+    // Конвертация в Base64 с уменьшенным качеством
+    const quality = 0.7; // 70% качество
+    const base64Image = canvas.toDataURL('image/png', quality);
+
+    // Удаление префикса Base64
+    const base64Data = base64Image.split(',')[1];
+
+    capturedImageData = base64Data;
+
 
     const previewImage = document.getElementById('previewImage');
     previewImage.src = base64Image;
