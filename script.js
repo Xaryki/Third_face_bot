@@ -1,27 +1,21 @@
 document.getElementById('startButton').addEventListener('click', () => {
-    showScreen('instructionScreen');
-});
-
-document.getElementById('nextButton').addEventListener('click', () => {
     showScreen('cameraScreen');
     startCamera();
 });
 
-document.getElementById('captureButton').addEventListener('click', () => {
-    capturePhoto();
+document.getElementById('nextButton').addEventListener('click', () => {
+    Telegram.WebApp.sendData(capturedImageData);
 });
 
-let capturedImageData = null; // Глобальная переменная для хранения данных изображения
+let capturedImageData = null;
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (window.Telegram.WebApp) {
+    if (window.Telegram && window.Telegram.WebApp) {
         Telegram.WebApp.MainButton.hide();
+        Telegram.WebApp.expand();
 
         const captureButton = document.getElementById('captureButton');
         captureButton.addEventListener('click', function() {
-            // Логика захвата фотографии
-            // ...
-
             capturedImageData = capturePhoto();
             Telegram.WebApp.MainButton.show();
             Telegram.WebApp.MainButton.setText('Отправить');
@@ -29,38 +23,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         Telegram.WebApp.MainButton.onClick(() => {
             if (capturedImageData) {
-                console.log('Кнопка отправить была нажата');
-                // Отправка данных боту
                 Telegram.WebApp.sendData(capturedImageData);
             }
         });
 
-        // Дополнительная логика Mini App
-        // ...
-    }
-});
+        const themeParams = window.Telegram.WebApp.themeParams;
+        Telegram.WebApp.setHeaderColor(themeParams.bg_color);
+        Telegram.WebApp.setBackgroundColor(themeParams.secondary_bg_color);
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOMContentLoaded event triggered");
-    if (window.Telegram.WebApp) {
-        // Расширение Mini App до полной высоты
-        window.Telegram.WebApp.expand();
+        Telegram.WebApp.onEvent('viewportChanged', (event) => {
+            if (event.isStateStable) {
+                // Обработка изменения видимой области
+            }
+        });
 
-        // Доступ к различным данным
-        // const initData = window.Telegram.WebApp.initData; // Сырые данные
-        // const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe; // Ненадежные данные
-        // const version = window.Telegram.WebApp.version; // Версия Bot API
-        // ...и так далее для других полей
-
-        // Используйте эти данные в соответствии с вашими потребностями
+        Telegram.WebApp.enableClosingConfirmation();
     }
 });
 
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
-        screen.classList.remove('active');
+        screen.style.display = 'none';
     });
-    document.getElementById(screenId).classList.add('active');
+    document.getElementById(screenId).style.display = 'block';
 }
 
 function startCamera() {
@@ -83,13 +68,11 @@ function capturePhoto() {
     canvas.height = videoElement.videoHeight;
     canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    // Конвертация изображения в строку base64 и сохранение данных
-    capturedImageData = canvas.toDataURL('image/png');
-
-    // Отображение захваченного изображения
+    const imageData = canvas.toDataURL('image/png');
     const previewImage = document.getElementById('previewImage');
-    previewImage.src = capturedImageData;
+    previewImage.src = imageData;
 
-    // Показать экран предпросмотра
     showScreen('previewScreen');
+
+    return imageData;
 }
