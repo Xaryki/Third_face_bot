@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Новогоднее Приложение</title>
     <link rel="stylesheet" href="style.css"> <!-- Подключение CSS -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -23,14 +22,14 @@
 
         <!-- Экран с камерой -->
         <div id="cameraScreen" class="screen">
-            <video id="video" playsinline autoplay></video>
+            <video id="video" autoplay></video>
             <button id="captureButton">Сделать фото</button>
         </div>
 
         <!-- Экран предпросмотра фото -->
         <div id="previewScreen" class="screen">
             <img id="previewImage" src="">
-            
+            <button id="sendButton">Отправить</button>
         </div>
     </div>
 
