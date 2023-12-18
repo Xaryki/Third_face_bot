@@ -11,30 +11,50 @@ document.getElementById('captureButton').addEventListener('click', () => {
     capturePhoto();
 });
 
+// w
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.Telegram.WebApp) {
+        // Скрываем основную кнопку до нажатия кнопки "Сделать фото"
+        Telegram.WebApp.MainButton.hide();
+
+        // Получаем элемент кнопки "Сделать фото" в вашем HTML
+        const captureButton = document.getElementById('captureButton');
+        
+        // Добавляем обработчик события на кнопку "Сделать фото"
+        captureButton.addEventListener('click', function() {
+            // Логика для захвата фотографии
+            // ...
+
+            // После захвата фото, показываем основную кнопку
+            Telegram.WebApp.MainButton.show();
+            Telegram.WebApp.MainButton.setText('Отправить');
+            Telegram.WebApp.MainButton.onClick(() => {
+                // Логика отправки фотографии или другого действия
+                console.log('Кнопка отправить была нажата');
+                // Вызовите здесь функцию для отправки фотографии
+            });
+        });
+        
+        // Настраиваем остальную логику Mini App, если необходимо
+        // ...
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram.WebApp) {
         // Расширение Mini App до полной высоты
         window.Telegram.WebApp.expand();
-        Telegram.WebApp.MainButton.hide();
 
-        const captureButton = document.getElementById('captureButton');
-        captureButton.addEventListener('click', function() {
-            capturedImageData = /* захват данных фотографии */;
-            Telegram.WebApp.MainButton.show();
-            Telegram.WebApp.MainButton.setText('Отправить');
-        });
+        // Доступ к различным данным
+        // const initData = window.Telegram.WebApp.initData; // Сырые данные
+        // const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe; // Ненадежные данные
+        // const version = window.Telegram.WebApp.version; // Версия Bot API
+        // ...и так далее для других полей
 
-        Telegram.WebApp.MainButton.onClick(() => {
-            if (capturedImageData) {
-                console.log('Кнопка отправить была нажата');
-                Telegram.WebApp.sendData(capturedImageData);
-            }
-        });
+        // Используйте эти данные в соответствии с вашими потребностями
     }
 });
-
-let capturedImageData = null; // Глобальная переменная для хранения данных изображения
 
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
@@ -63,13 +83,9 @@ function capturePhoto() {
     canvas.height = videoElement.videoHeight;
     canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    // Конвертация изображения в строку base64 и сохранение данных
-    capturedImageData = canvas.toDataURL('image/png');
+    // Конвертация изображения в строку base64
+    const imageData = canvas.toDataURL('image/png');
 
-    // Отображение захваченного изображения
-    const previewImage = document.getElementById('previewImage');
-    previewImage.src = capturedImageData;
-
-    // Показать экран предпросмотра
-    showScreen('previewScreen');
+    // Отправка данных боту
+    Telegram.WebApp.sendData(imageData);
 }
