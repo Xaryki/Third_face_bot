@@ -62,15 +62,19 @@ function startCamera() {
 function capturePhoto() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
-    canvas.width = videoElement.videoWidth;
-    canvas.height = videoElement.videoHeight;
-    canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    const imageData = canvas.toDataURL('image/png');
+    // Уменьшение размеров холста для снижения размера изображения
+    const scale = 0.5; // Масштабирование изображения до 50%
+    canvas.width = videoElement.videoWidth * scale;
+    canvas.height = videoElement.videoHeight * scale;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
     const previewImage = document.getElementById('previewImage');
-    previewImage.src = imageData;
+    previewImage.src = base64Image;
 
     showScreen('previewScreen');
 
-    return imageData;
+    return base64Data;
 }
