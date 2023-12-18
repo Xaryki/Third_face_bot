@@ -64,33 +64,15 @@ function startCamera() {
 function capturePhoto() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+    canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    // Уменьшение размеров холста для снижения размера изображения
-    const scale = 0.5; // Масштабирование изображения до 50%
-    canvas.width = videoElement.videoWidth * scale;
-    canvas.height = videoElement.videoHeight * scale;
-
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-    // Конвертация в Base64 с уменьшенным качеством
-    const quality = 0.7; // 70% качество
-    const base64Image = canvas.toDataURL('image/png', quality);
-
-    // Удаление префикса Base64
-    const base64Data = base64Image.split(',')[1];
-
-    if (base64Data.length <= 4096) {
-        capturedImageData = base64Data;
-    } else {
-        console.error('Изображение всё ещё слишком большое для отправки');
-        // Возможная дополнительная обработка ошибки
-    }
-
+    const imageData = canvas.toDataURL('image/png');
     const previewImage = document.getElementById('previewImage');
-    previewImage.src = base64Image;
+    previewImage.src = imageData;
 
     showScreen('previewScreen');
 
-    return base64Data;
+    return imageData;
 }
