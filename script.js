@@ -7,7 +7,7 @@ document.getElementById('nextButton').addEventListener('click', () => {
     Telegram.WebApp.sendData(capturedImageData);
 });
 
-let capturedImageData = null;
+let capturedImageData = true;
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram && window.Telegram.WebApp) {
