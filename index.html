@@ -7,6 +7,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+    <form action="http://localhost:3000/uploads" method="post" enctype="multipart/form-data">
+    <input type="file" name="image">
+    <input type="submit" value="Загрузить">
+    </form>
     <div id="app">
         <!-- Экран приветствия -->
         <div id="welcomeScreen" class="screen active">
