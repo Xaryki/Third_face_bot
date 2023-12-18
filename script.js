@@ -11,9 +11,7 @@ document.getElementById('captureButton').addEventListener('click', () => {
     capturePhoto();
 });
 
-document.getElementById('sendButton').addEventListener('click', () => {
-    sendPhotoToBot();
-});
+
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.Telegram.WebApp) {
@@ -88,30 +86,4 @@ function capturePhoto() {
 
     document.getElementById('previewImage').src = imageData;
     showScreen('previewScreen');
-}
-
-function sendPhotoToBot() {
-    const imageData = document.getElementById('previewImage').src;
-    const chat_id = getChatId(); // Получаем chat_id динамически
-    const bot_token = '6939402556:AAHW_lZWPrMHwVJlLK8r2Io7jVQfYZaaSlo'; // Токен вашего Telegram бота
-    const telegram_api_url = `https://api.telegram.org/bot${bot_token}/sendPhoto`;
-
-    let formData = new FormData();
-    formData.append('1277274408', chat_id);
-    formData.append('photo', imageData);
-
-    fetch(telegram_api_url, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Изображение отправлено в бота', data);
-    })
-    .catch(error => {
-        console.error('Ошибка при отправке изображения в бота', error);
-    });
-}
-function getChatId() {
-    // Ваш код для получения chat_id, например, из URL или временного хранилища
 }
