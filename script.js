@@ -95,3 +95,9 @@ function capturePhoto() {
     // Показать экран предпросмотра
     showScreen('previewScreen');
 }
+Telegram.WebApp.MainButton.onClick(() => {
+    if (capturedImageData) {
+        // Отправка данных боту
+        Telegram.WebApp.sendData(capturedImageData);
+    }
+});
