@@ -11,8 +11,49 @@ document.getElementById('captureButton').addEventListener('click', () => {
     capturePhoto();
 });
 
-document.getElementById('sendButton').addEventListener('click', () => {
-    sendPhotoToBot();
+let capturedImageData = null; // Глобальная переменная для хранения данных изображения
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.Telegram.WebApp) {
+        Telegram.WebApp.MainButton.hide();
+
+        const captureButton = document.getElementById('captureButton');
+        captureButton.addEventListener('click', function() {
+            // Логика захвата фотографии
+            // ...
+
+            capturedImageData = capturePhoto();
+            Telegram.WebApp.MainButton.show();
+            Telegram.WebApp.MainButton.setText('Отправить');
+        });
+
+        Telegram.WebApp.MainButton.onClick(() => {
+            if (capturedImageData) {
+                console.log('Кнопка отправить была нажата');
+                // Отправка данных боту
+                Telegram.WebApp.sendData(capturedImageData);
+            }
+        });
+
+        // Дополнительная логика Mini App
+        // ...
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOMContentLoaded event triggered");
+    if (window.Telegram.WebApp) {
+        // Расширение Mini App до полной высоты
+        window.Telegram.WebApp.expand();
+
+        // Доступ к различным данным
+        // const initData = window.Telegram.WebApp.initData; // Сырые данные
+        // const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe; // Ненадежные данные
+        // const version = window.Telegram.WebApp.version; // Версия Bot API
+        // ...и так далее для других полей
+
+        // Используйте эти данные в соответствии с вашими потребностями
+    }
 });
 
 function showScreen(screenId) {
@@ -41,35 +82,14 @@ function capturePhoto() {
     canvas.width = videoElement.videoWidth;
     canvas.height = videoElement.videoHeight;
     canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-    const imageData = canvas.toDataURL('image/png');
 
-    document.getElementById('previewImage').src = imageData;
+    // Конвертация изображения в строку base64 и сохранение данных
+    capturedImageData = canvas.toDataURL('image/png');
+
+    // Отображение захваченного изображения
+    const previewImage = document.getElementById('previewImage');
+    previewImage.src = capturedImageData;
+
+    // Показать экран предпросмотра
     showScreen('previewScreen');
 }
-
-function sendPhotoToBot() {
-    const imageData = document.getElementById('previewImage').src;
-    const chat_id = getChatId(); // Получаем chat_id динамически
-    const bot_token = '6939402556:AAHW_lZWPrMHwVJlLK8r2Io7jVQfYZaaSlo'; // Токен вашего Telegram бота
-    const telegram_api_url = `https://api.telegram.org/bot${bot_token}/sendPhoto`;
-
-    let formData = new FormData();
-    formData.append('1277274408', chat_id);
-    formData.append('photo', imageData);
-
-    fetch(telegram_api_url, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Изображение отправлено в бота', data);
-    })
-    .catch(error => {
-        console.error('Ошибка при отправке изображения в бота', error);
-    });
-}
-function getChatId() {
-    // Ваш код для получения chat_id, например, из URL или временного хранилища
-}
-
