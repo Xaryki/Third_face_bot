@@ -44,12 +44,12 @@ let detections = [];
 let video;
 let canvas;
 let hatImg; // Переменная для изображения шляпы
-
+let styleNumber ;
 
 function preload() {
   // Загружаем изображение шляпы
-    // Загружаем разные изображения в зависимости от стиля
-  let styleNumber = localStorage.getItem('selectedStyle');
+  // Загружаем разные изображения в зависимости от стиля
+  styleNumber = localStorage.getItem('selectedStyle');
   if (styleNumber === '1') {
     hatImg = loadImage('hat.png'); // Путь к изображению для стиля 1
   } else if (styleNumber === '2') {
@@ -95,30 +95,21 @@ function gotFaces(error, result) {
   }
 
   detections = result;　//Now all the data in this detections
-  // console.log(detections);
 
   clear();//Draw transparent background;
-  //drawBoxs(detections);//Draw detection box:
   //drawLandmarks(detections);//// Draw all the face points:
-  // drawExpressions(detections, 20, 250, 14);//Draw face expression:
 
   // Вставьте вызов функции здесь
-  drawHat(detections);
+    if (styleNumber === '1') {
+   drawHat(detections); 
+  } else if (styleNumber === '2') {
+    drawHat2(detections); // 
+  }
+  
 
   faceapi.detect(gotFaces);// Call the function again at here:
 }
 
-function drawBoxs(detections){
-  if (detections.length > 0) {//If at least 1 face is detected:
-    for (f=0; f < detections.length; f++){
-      let {_x, _y, _width, _height} = detections[f].alignedRect._box;
-      stroke(44, 169, 225);
-      strokeWeight(1);
-      noFill();
-      rect(_x, _y, _width, _height);
-    }
-  }
-}
 
 function drawLandmarks(detections){
   if (detections.length > 0) {//If at least 1 face is detected:
@@ -133,31 +124,8 @@ function drawLandmarks(detections){
   }
 }
 
-function drawExpressions(detections, x, y, textYSpace){
-  if(detections.length > 0){//If at least 1 face is detected:
-    let {neutral, happy, angry, sad, disgusted, surprised, fearful} = detections[0].expressions;
-    textFont('Helvetica Neue');
-    textSize(14);
-    noStroke();
-    fill(44, 169, 225);
 
-    text("neutral:       " + nf(neutral*100, 2, 2)+"%", x, y);
-    text("happiness: " + nf(happy*100, 2, 2)+"%", x, y+textYSpace);
-    text("anger:        " + nf(angry*100, 2, 2)+"%", x, y+textYSpace*2);
-    text("sad:            "+ nf(sad*100, 2, 2)+"%", x, y+textYSpace*3);
-    text("disgusted: " + nf(disgusted*100, 2, 2)+"%", x, y+textYSpace*4);
-    text("surprised:  " + nf(surprised*100, 2, 2)+"%", x, y+textYSpace*5);
-    text("fear:           " + nf(fearful*100, 2, 2)+"%", x, y+textYSpace*6);
-  }else{//If no faces is detected:
-    text("neutral: ", x, y);
-    text("happiness: ", x, y + textYSpace);
-    text("anger: ", x, y + textYSpace*2);
-    text("sad: ", x, y + textYSpace*3);
-    text("disgusted: ", x, y + textYSpace*4);
-    text("surprised: ", x, y + textYSpace*5);
-    text("fear: ", x, y + textYSpace*6);
-  }
-}
+
 
 function drawHat(detections){
   for (let i = 0; i < detections.length; i++) {
@@ -174,6 +142,20 @@ function drawHat(detections){
   }
 }
 
+function drawHat2(detections){
+  for (let i = 0; i < detections.length; i++) {
+    let {_x, _y, _width, _height} = detections[i].alignedRect._box;
+
+    // Расчет размера и позиции шляпы
+    let hatWidth = _width * 3;
+    let hatHeight = hatWidth * 0.6; // Примерное соотношение ширины к высоте
+    let hatX = _x - hatWidth * 0.35;
+    let hatY = _y - hatHeight * 0.5; // Смещение шляпы вверх от головы
+
+    // Отрисовка шляпы
+    image(hatImg, hatX, hatY, hatWidth, hatHeight);
+  }
+}
 
 
 
