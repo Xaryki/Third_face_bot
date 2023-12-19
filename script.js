@@ -67,44 +67,6 @@ function startCamera() {
 
 
 
-
-function loadFaceApiModels() {
-    return Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri('https://vladmandic.github.io/face-api/model/tiny_face_detector_model-weights_manifest.json'),
-        faceapi.nets.faceLandmark68Net.loadFromUri('https://vladmandic.github.io/face-api/model/face_landmark_68_model-weights_manifest.json')
-    ]);
-}
-
-
-let hatImage = null;
-
-function preloadHatImage() {
-    hatImage = new Image();
-    hatImage.src = 'hat.png'; // Убедитесь, что путь к изображению шапки указан правильно
-}
-
-function drawChristmasHat(canvas, detections) {
-    const ctx = canvas.getContext('2d');
-
-    if (!hatImage) {
-        console.error("Изображение шапки не загружено");
-        return;
-    }
-
-    detections.forEach(detection => {
-        const { x, y, width, height } = detection.detection.box;
-
-        const hatWidth = width;
-        const hatHeight = hatWidth * 0.7;
-        const hatX = x;
-        const hatY = y - hatHeight * 0.6;
-
-        ctx.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
-    });
-}
-
-
-
 function capturePhoto() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
