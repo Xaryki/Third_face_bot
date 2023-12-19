@@ -49,8 +49,8 @@ function gotFaces(error, result) {
   // console.log(detections);
 
   clear();//Draw transparent background;
-  drawBoxs(detections);//Draw detection box:
-  drawLandmarks(detections);//// Draw all the face points:
+  //drawBoxs(detections);//Draw detection box:
+  //drawLandmarks(detections);//// Draw all the face points:
   // drawExpressions(detections, 20, 250, 14);//Draw face expression:
 
   // Вставьте вызов функции здесь
