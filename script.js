@@ -4,18 +4,6 @@ document.getElementById('startButton').addEventListener('click', () => {
     setup();
 });
 
-document.getElementById('nextButton').addEventListener('click', () => {
-    showScreen('cameraScreen');
-    
-});
-document.getElementById('captureButton').addEventListener('click', () => {
-    showScreen('previewScreen');
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    preloadHatImage();
-    // ... Остальной код ...
-});
 
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
