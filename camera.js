@@ -1,7 +1,6 @@
 document.getElementById('captureButton').addEventListener('click', () => {
-    let base64Image = canvas.toDataURL('image/png');
-    // Обрезаем префикс 'data:image/png;base64,'
-    let base64Data = base64Image.replace(/^data:image\/(png|jpg);base64,/, "");
+
+    let base64Data = capturePhoto();
   
     const apiUrl = 'http://81.94.159.98:8000/api/v1/send/photo';
     let image = base64Data;
@@ -9,7 +8,7 @@ document.getElementById('captureButton').addEventListener('click', () => {
     uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
     image: image,
     };
-  
+
     // Создаем объект XMLHttpRequest
     const xhr = new XMLHttpRequest();
   
@@ -35,6 +34,8 @@ document.getElementById('captureButton').addEventListener('click', () => {
     const postDataJSON = JSON.stringify(postData);
     xhr.send(postDataJSON);
 });
+
+
 
 let faceapi;
 let detections = [];
@@ -162,6 +163,28 @@ function drawHat(detections){
     image(hatImg, hatX, hatY, hatWidth, hatHeight);
   }
 }
+
+
+
+
+function capturePhoto() {
+    const videoElement = document.getElementById('video');
+    const canvas = document.createElement('canvas');
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+    // Конвертация в Base64 
+    const base64Image = canvas.toDataURL('image/png');
+
+    // Удаление префикса Base64
+    const base64Data = base64Image.split(',')[1];
+
+    return base64Data;
+}
+
+
+
 
 
 
