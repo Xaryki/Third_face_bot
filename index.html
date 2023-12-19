@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ваш сайт</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ml5js/Intro-ML-Arts-IMA@ml5-build-10-7-19/ml5_build/ml5.min.js"></script>
+</head>
+<body style="background-color: red;">
+    <!-- Содержимое страницы будет здесь -->
+    <div class="slide" id="slide1">
+    <h1>Держи голову в тепле</h1>
+    <button onclick="goToSlide(2)">НАЧАТЬ</button>
+</div>
+    <div class="slide" id="slide2" style="display: none;">
+    <p class="instruction">инструкция</p>
+    <p>Разрешить доступ к камере.</p>
+    <button onclick="goToSlide(3)">ДАЛЕЕ</button>
+</div>
+<div class="slide" id="slide3" style="display: none;">
+    <p class="instruction">инструкция</p>
+    <p>Сделай фото с маской нашей шапки, выбрав одно из двух ее положений.</p>
+    <button onclick="goToSlide(4)">ДАЛЕЕ</button>
+</div>
+<div class="slide" id="slide4" style="display: none;">
+    <p class="instruction">инструкция</p>
+    <p>Поставь фото в шапке на аватарку в телеграме.</p>
+    <button onclick="goToSlide(5)">ДАЛЕЕ</button>
+</div>
+<div class="slide" id="slide5" style="display: none;">
+    <p>ВЫБЕРИ СТИЛЬ</p>
+    <div class="image-choice" id="style1" onclick="selectStyle(1)">
+        <img src="hat.png">
+        <p>Описание стиля 1</p>
+    </div>
+    <div class="image-choice" id="style2" onclick="selectStyle(2)">
+        <img src="hat.png">
+        <p>Описание стиля 2</p>
+    </div>
+    <!-- Дополнительные кнопки могут быть здесь -->
+</div>
+    <div class="buttons" style="display: none;">
+    <button id="takePhoto">СДЕЛАТЬ ФОТО</button>
+    <button id="uploadPhoto">ЗАГРУЗИТЬ</button>
+</div>
+<div id="cameraSlide" class="slide">
+    <div class="camera-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
