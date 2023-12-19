@@ -45,11 +45,21 @@ let video;
 let canvas;
 let hatImg; // Переменная для изображения шляпы
 
+const urlParams = new URLSearchParams(window.location.search);
+const style = urlParams.get('style'); // Получаем номер стиля
+
 function preload() {
   // Загружаем изображение шляпы
-  hatImg = loadImage('hat.png'); // Убедитесь, что указан правильный путь к изображению
+    // Загружаем разные изображения в зависимости от стиля
+  if (style === '1') {
+    hatImg = loadImage('hat.png'); // Путь к изображению для стиля 1
+  } else if (style === '2') {
+    hatImg = loadImage('hat2.png'); // Путь к изображению для стиля 2
+  }
+  // hatImg = loadImage('hat.png'); // Убедитесь, что указан правильный путь к изображению
   Telegram.WebApp.expand();
   document.getElementById("test").innerHTML = window.Telegram.WebApp.initDataUnsafe.user.id;
+  
 }
 
 
