@@ -1,3 +1,41 @@
+document.getElementById('captureButton').addEventListener('click', () => {
+    let base64Image = canvas.toDataURL('image/png');
+    // Обрезаем префикс 'data:image/png;base64,'
+    let base64Data = base64Image.replace(/^data:image\/(png|jpg);base64,/, "");
+  
+    const apiUrl = 'http://81.94.159.98:8000/api/v1/send/photo';
+    let image = base64Data;
+    const postData = {
+    uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
+    image: image,
+    };
+  
+    // Создаем объект XMLHttpRequest
+    const xhr = new XMLHttpRequest();
+  
+    // Устанавливаем метод запроса и URL
+    xhr.open('POST', apiUrl, true);
+  
+    // Устанавливаем заголовок Content-Type
+    xhr.setRequestHeader('Content-Type', 'application/json');
+  
+    // Обработчик события готовности запроса
+    xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+        // Проверяем статус ответа
+        if (xhr.status === 200) {
+        console.log('Успешный ответ от сервера:', xhr.responseText);
+        } else {
+        console.error('Ошибка при отправке запроса. Статус:', xhr.status);
+        }
+    }
+    };
+  
+    // Преобразуем объект postData в JSON и отправляем в теле запроса
+    const postDataJSON = JSON.stringify(postData);
+    xhr.send(postDataJSON);
+});
+
 let faceapi;
 let detections = [];
 
@@ -123,4 +161,6 @@ function drawHat(detections){
     image(hatImg, hatX, hatY, hatWidth, hatHeight);
   }
 }
+
+
 
