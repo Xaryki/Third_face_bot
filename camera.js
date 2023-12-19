@@ -51,9 +51,10 @@ const style = urlParams.get('style'); // Получаем номер стиля
 function preload() {
   // Загружаем изображение шляпы
     // Загружаем разные изображения в зависимости от стиля
-  if (style === '1') {
+  let styleNumber = localStorage.getItem('selectedStyle');
+  if (styleNumber === '1') {
     hatImg = loadImage('hat.png'); // Путь к изображению для стиля 1
-  } else if (style === '2') {
+  } else if (styleNumber === '2') {
     hatImg = loadImage('hat2.png'); // Путь к изображению для стиля 2
   }
   // hatImg = loadImage('hat.png'); // Убедитесь, что указан правильный путь к изображению
