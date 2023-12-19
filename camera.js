@@ -8,6 +8,7 @@ let hatImg; // Переменная для изображения шляпы
 function preload() {
   // Загружаем изображение шляпы
   hatImg = loadImage('hat.png'); // Убедитесь, что указан правильный путь к изображению
+  Telegram.WebApp.expand();
 }
 
 
