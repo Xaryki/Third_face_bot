@@ -42,13 +42,13 @@ function selectStyle(styleNumber) {
     if (selectedStyle) {
         selectedStyle.classList.add('selected-style');
     }
-
+    localStorage.setItem('selectedStyle', styleNumber);
     // Показ кнопок
     document.querySelector('.buttons').style.display = 'block';
 }
 
 document.getElementById('takePhoto').addEventListener('click', function() {
-    window.location.href = 'camera.html?style=' + styleNumber;
+    window.location.href = 'camera.html?';
     document.getElementById('cameraSlide').style.display = 'block';
     // Здесь вызывайте функцию инициализации камеры
 
