@@ -1,5 +1,5 @@
 document.getElementById('startButton').addEventListener('click', () => {
-    showScreen('cameraScreen');
+    showScreen('nextButton');
     startCamera();
 });
 
