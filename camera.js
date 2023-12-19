@@ -45,8 +45,6 @@ let video;
 let canvas;
 let hatImg; // Переменная для изображения шляпы
 
-const urlParams = new URLSearchParams(window.location.search);
-const style = urlParams.get('style'); // Получаем номер стиля
 
 function preload() {
   // Загружаем изображение шляпы
