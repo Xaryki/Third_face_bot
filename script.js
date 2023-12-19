@@ -4,11 +4,11 @@ document.getElementById('startButton').addEventListener('click', () => {
 
 document.getElementById('nextButton').addEventListener('click', () => {
     showScreen('cameraScreen');
-    startCamera();
+    preload();
+    setup();
 });
-document.getElementById('previewButton').addEventListener('click', () => {
+document.getElementById('captureButton').addEventListener('click', () => {
     showScreen('previewScreen');
-    startCamera();
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -16,84 +16,127 @@ document.addEventListener('DOMContentLoaded', function() {
     // ... Остальной код ...
 });
 
-let capturedImageData = null;
+let faceapi;
+let detections = [];
 
-document.addEventListener('DOMContentLoaded', function() {
-    if (window.Telegram && window.Telegram.WebApp) {
-        Telegram.WebApp.MainButton.hide();
-        Telegram.WebApp.expand();
+let video;
+let canvas;
+let hatImg; // Переменная для изображения шляпы
 
-        const captureButton = document.getElementById('captureButton');
-        captureButton.addEventListener('click', function() {
-            capturedImageData = capturePhoto();
-            Telegram.WebApp.MainButton.show();
-            Telegram.WebApp.MainButton.setText('Отправить');
-        });
-
-        Telegram.WebApp.MainButton.onClick(() => {
-            if (capturedImageData) {
-                Telegram.WebApp.close(); // Закрыть Mini App при нажатии на MainButton
-            }
-        });
-
-        const themeParams = window.Telegram.WebApp.themeParams;
-        Telegram.WebApp.setHeaderColor(themeParams.bg_color);
-        Telegram.WebApp.setBackgroundColor(themeParams.secondary_bg_color);
-
-        Telegram.WebApp.onEvent('viewportChanged', (event) => {
-            if (event.isStateStable) {
-                // Обработка изменения видимой области
-            }
-        });
-    }
-});
-
-function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(screen => {
-        screen.style.display = 'none';
-    });
-    document.getElementById(screenId).style.display = 'block';
-}
-
-function startCamera() {
-    const videoElement = document.getElementById('video');
-    if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-                videoElement.srcObject = stream;
-            })
-            .catch(function (error) {
-                console.log("Ошибка при доступе к камере: ", error);
-            });
-    }
+function preload() {
+  // Загружаем изображение шляпы
+  hatImg = loadImage('hat.png'); // Убедитесь, что указан правильный путь к изображению
 }
 
 
+function setup() {
+  canvas = createCanvas(480, 360);
+  canvas.id("canvas");
+
+  video = createCapture(VIDEO);
+  video.id("video");
+  video.size(width, height);
+
+  const faceOptions = {
+    withLandmarks: true,
+    withExpressions: true,
+    withDescriptors: true,
+    minConfidence: 0.5
+  };
+
+  //Initialize the model
+  faceapi = ml5.faceApi(video, faceOptions, faceReady);
+}
+
+function faceReady() {
+  faceapi.detect(gotFaces);// Start detecting faces
+}
 
 
-function capturePhoto() {
-    const videoElement = document.getElementById('video');
-    const canvas = document.createElement('canvas');
-    canvas.width = videoElement.videoWidth;
-    canvas.height = videoElement.videoHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+// Got faces
+function gotFaces(error, result) {
+  if (error) {
+    console.log(error);
+    return;
+  }
 
-    loadFaceApiModels()
-        .then(() => faceapi.detectAllFaces(canvas, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks())
-        .then(detections => {
-            drawChristmasHat(canvas, detections);
+  detections = result;　//Now all the data in this detections
+  // console.log(detections);
 
-            const previewImage = document.getElementById('previewImage');
-            previewImage.src = canvas.toDataURL();
+  clear();//Draw transparent background;
+  drawBoxs(detections);//Draw detection box:
+  drawLandmarks(detections);//// Draw all the face points:
+  // drawExpressions(detections, 20, 250, 14);//Draw face expression:
 
-            return canvas.toDataURL();
-        })
-        .then(dataUrl => {
-            capturedImageData = dataUrl;
-        })
-        .catch(error => {
-            console.error('Ошибка при распознавании лиц:', error);
-        });
+  // Вставьте вызов функции здесь
+  drawHat(detections);
+
+  faceapi.detect(gotFaces);// Call the function again at here:
+}
+
+function drawBoxs(detections){
+  if (detections.length > 0) {//If at least 1 face is detected:
+    for (f=0; f < detections.length; f++){
+      let {_x, _y, _width, _height} = detections[f].alignedRect._box;
+      stroke(44, 169, 225);
+      strokeWeight(1);
+      noFill();
+      rect(_x, _y, _width, _height);
+    }
+  }
+}
+
+function drawLandmarks(detections){
+  if (detections.length > 0) {//If at least 1 face is detected:
+    for (f=0; f < detections.length; f++){
+      let points = detections[f].landmarks.positions;
+      for (let i = 0; i < points.length; i++) {
+        stroke(44, 169, 225);
+        strokeWeight(3);
+        point(points[i]._x, points[i]._y);
+      }
+    }
+  }
+}
+
+function drawExpressions(detections, x, y, textYSpace){
+  if(detections.length > 0){//If at least 1 face is detected:
+    let {neutral, happy, angry, sad, disgusted, surprised, fearful} = detections[0].expressions;
+    textFont('Helvetica Neue');
+    textSize(14);
+    noStroke();
+    fill(44, 169, 225);
+
+    text("neutral:       " + nf(neutral*100, 2, 2)+"%", x, y);
+    text("happiness: " + nf(happy*100, 2, 2)+"%", x, y+textYSpace);
+    text("anger:        " + nf(angry*100, 2, 2)+"%", x, y+textYSpace*2);
+    text("sad:            "+ nf(sad*100, 2, 2)+"%", x, y+textYSpace*3);
+    text("disgusted: " + nf(disgusted*100, 2, 2)+"%", x, y+textYSpace*4);
+    text("surprised:  " + nf(surprised*100, 2, 2)+"%", x, y+textYSpace*5);
+    text("fear:           " + nf(fearful*100, 2, 2)+"%", x, y+textYSpace*6);
+  }else{//If no faces is detected:
+    text("neutral: ", x, y);
+    text("happiness: ", x, y + textYSpace);
+    text("anger: ", x, y + textYSpace*2);
+    text("sad: ", x, y + textYSpace*3);
+    text("disgusted: ", x, y + textYSpace*4);
+    text("surprised: ", x, y + textYSpace*5);
+    text("fear: ", x, y + textYSpace*6);
+  }
+}
+
+function drawHat(detections){
+  for (let i = 0; i < detections.length; i++) {
+    let {_x, _y, _width, _height} = detections[i].alignedRect._box;
+
+    // Расчет размера и позиции шляпы
+    let hatWidth = _width * 1.5;
+    let hatHeight = hatWidth * 1; // Примерное соотношение ширины к высоте
+    let hatX = _x - hatWidth * 0.3;
+    let hatY = _y - hatHeight * 0.4; // Смещение шляпы вверх от головы
+
+    // Отрисовка шляпы
+    image(hatImg, hatX, hatY, hatWidth, hatHeight);
+  }
 }
 
