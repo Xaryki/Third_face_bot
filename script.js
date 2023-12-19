@@ -7,6 +7,10 @@ document.getElementById('nextButton').addEventListener('click', () => {
     showScreen('cameraScreen');
     startCamera();
 });
+document.getElementById('previewButton').addEventListener('click', () => {
+    showScreen('previewScreen');
+    startCamera();
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     preloadHatImage();
