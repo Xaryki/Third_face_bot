@@ -57,7 +57,6 @@ function preload() {
   }
   // hatImg = loadImage('hat.png'); // Убедитесь, что указан правильный путь к изображению
   Telegram.WebApp.expand();
-  document.getElementById("test").innerHTML = window.Telegram.WebApp.initDataUnsafe.user.id;
   
 }
 
