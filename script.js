@@ -1,6 +1,7 @@
 window.onload = function() {
     // Показать первый слайд при загрузке страницы
     goToSlide(1);
+    Telegram.WebApp.expand();
 };
 
 window.addEventListener('resize', resizeCanvas);
