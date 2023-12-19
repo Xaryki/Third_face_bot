@@ -4,7 +4,8 @@ document.getElementById('startButton').addEventListener('click', () => {
 });
 
 document.getElementById('nextButton').addEventListener('click', () => {
-    Telegram.WebApp.sendData(capturedImageData);
+    showScreen('cameraScreen');
+    startCamera();
 });
 
 document.addEventListener('DOMContentLoaded', function() {
