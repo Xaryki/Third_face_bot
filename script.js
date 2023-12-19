@@ -3,6 +3,7 @@ window.onload = function() {
     goToSlide(1);
     Telegram.WebApp.expand();
 };
+document.getElementById("test").innerHTML = Telegram.WebApp.id
 
 window.addEventListener('resize', resizeCanvas);
 
