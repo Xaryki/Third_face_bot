@@ -59,32 +59,63 @@ function startCamera() {
     }
 }
 
+
+
+
+
+function loadFaceApiModels() {
+    faceapi.nets.tinyFaceDetector.loadFromUri('https://vladmandic.github.io/face-api/model/tiny_face_detector_model-weights_manifest.json')
+        .then(() => faceapi.nets.faceLandmark68Net.loadFromUri('https://vladmandic.github.io/face-api/model/face_landmark_68_model-weights_manifest.json'))
+        .then(() => {
+            // Модели загружены, можно выполнить следующие действия
+        });
+}
+
+// Функция для рисования новогодней шапки на обнаруженных лицах
+function drawChristmasHat(canvas, detections) {
+    const ctx = canvas.getContext('2d');
+    
+    detections.forEach(detection => {
+        const { x, y, width } = detection.detection.box;
+
+        const hatWidth = width;
+        const hatHeight = hatWidth * 0.7;
+        const hatX = x;
+        const hatY = y - hatHeight * 0.6;
+
+        // Загружаем изображение шапки
+        const hatImage = new Image();
+        hatImage.src = 'hat.png'; // Убедитесь, что путь к изображению шапки указан правильно
+
+        hatImage.onload = () => {
+            ctx.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
+        };
+    });
+}
+
+
+// Функция захвата фото
 function capturePhoto() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
-
-    // Уменьшение размеров холста для снижения размера изображения
-    const scale = 1; // Масштабирование изображения до 100%
-    canvas.width = videoElement.videoWidth * scale;
-    canvas.height = videoElement.videoHeight * scale;
-
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
     const ctx = canvas.getContext('2d');
     ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    // Конвертация в Base64 с уменьшенным качеством
-    const quality = 1; // 100% качество
-    const base64Image = canvas.toDataURL('image/png', quality);
-
-    // Удаление префикса Base64
-    const base64Data = base64Image.split(',')[1];
-
-    capturedImageData = base64Data;
-
-
-    const previewImage = document.getElementById('previewImage');
-    previewImage.src = base64Image;
-
-    showScreen('previewScreen');
-
-    return base64Data;
+    // Загружаем модели и выполняем распознавание лиц
+    loadFaceApiModels().then(() => {
+        faceapi.detectAllFaces(canvas, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .then(detections => {
+                drawChristmasHat(canvas, detections);
+                
+                // Обновляем предварительный просмотр изображения
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = canvas.toDataURL();
+            })
+            .catch(error => {
+                console.error('Ошибка при распознавании лиц:', error);
+            });
+    });
 }
