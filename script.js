@@ -1,11 +1,12 @@
 document.getElementById('startButton').addEventListener('click', () => {
-    showScreen('instructionScreen');
+    showScreen('cameraScreen');
+    preload();
+    setup();
 });
 
 document.getElementById('nextButton').addEventListener('click', () => {
     showScreen('cameraScreen');
-    preload();
-    setup();
+    
 });
 document.getElementById('captureButton').addEventListener('click', () => {
     showScreen('previewScreen');
