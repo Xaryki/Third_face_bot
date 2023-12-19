@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // ... Остальной код ...
 });
 
+function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.style.display = 'none';
+    });
+    document.getElementById(screenId).style.display = 'block';
+}
+
 let faceapi;
 let detections = [];
 
