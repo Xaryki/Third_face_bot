@@ -5,7 +5,8 @@ document.getElementById('captureButton').addEventListener('click', () => {
     const apiUrl = 'http://81.94.159.98:8000/api/v1/send/photo';
     let image = base64Data;
     const postData = {
-    uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
+    uuid: 1277274408,
+    // uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
     image: image,
     };
 
