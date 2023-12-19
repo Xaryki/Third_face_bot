@@ -1,5 +1,3 @@
-
-
 let faceapi;
 let detections = [];
 
