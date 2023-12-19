@@ -2,7 +2,6 @@ window.onload = function() {
     // Показать первый слайд при загрузке страницы
     goToSlide(1);
     Telegram.WebApp.expand();
-    document.getElementById("test").innerHTML = window.Telegram.WebApp.initDataUnsafe.user.id;
 };
 
 
