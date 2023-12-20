@@ -23,7 +23,10 @@ function goToSlide(slideNumber) {
     const selectedSlide = document.getElementById('slide' + slideNumber);
     selectedSlide.style.display = 'block';
 
-   
+    // Если это слайд с камерой, инициализируем камеру
+    if (slideNumber === 'cameraSlide') {
+        setupCamera();
+    }
 
 }
 
@@ -43,8 +46,9 @@ function selectStyle(styleNumber) {
     document.querySelector('.buttons').style.display = 'block';
 }
 
+document.getElementById('takePhoto').addEventListener('click', function() {
+    window.location.href = 'camera.html?';
+    document.getElementById('cameraSlide').style.display = 'block';
+    // Здесь вызывайте функцию инициализации камеры
 
-
-
-
-
+});
