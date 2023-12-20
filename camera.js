@@ -62,12 +62,12 @@ function preload() {
 
 function setup() {
 
-  canvas = createCanvas(1024, 1024);
+  canvas = createCanvas(640, 480);
   canvas.id("canvas");
 
   video = createCapture(VIDEO);
   video.id("video");
-  video.size(width, height);
+  video.size(640, 480);
 
   const faceOptions = {
     withLandmarks: true,
@@ -155,14 +155,41 @@ function drawHat2(detections){
   }
 }
 
-
-
 function capturePhoto() {
+    const videoElement = document.getElementById('video');
+    const canvas = document.createElement('canvas');
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+
+    const ctx = canvas.getContext('2d');
+    // Рисуем изображение
+    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+    // Создаём объект изображения для маски
+    const maskImage = new Image();
+    maskImage.src = 'hat.png'; // Укажите путь к файлу маски
+
+    // Убедитесь, что маска загружена перед рисованием
+    maskImage.onload = function() {
+        // Наложение маски
+        ctx.drawImage(maskImage, 0, 0, canvas.width, canvas.height);
+
+        // Конвертация в Base64
+        const base64Image = canvas.toDataURL('image/png');
+
+        // Удаление префикса Base64
+        const base64Data = base64Image.split(',')[1];
+
+        return base64Data;
+    };
+}
+
+function capturePhoto2() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
 
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    //ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
     ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
 
     // Конвертация в Base64 
@@ -173,6 +200,7 @@ function capturePhoto() {
 
     return base64Data;
 }
+
 
 
 
