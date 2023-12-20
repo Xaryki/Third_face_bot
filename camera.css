@@ -29,6 +29,7 @@ button {
   cursor: pointer;
   position: absolute; /* Используем абсолютное позиционирование */
   bottom: 20px; /* Располагаем кнопку внизу */
+  z-index: 2;
 }
 
 button:hover {
