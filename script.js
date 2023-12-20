@@ -23,10 +23,7 @@ function goToSlide(slideNumber) {
     const selectedSlide = document.getElementById('slide' + slideNumber);
     selectedSlide.style.display = 'block';
 
-    // Если это слайд с камерой, инициализируем камеру
-    if (slideNumber === 'cameraSlide') {
-        setupCamera();
-    }
+   
 
 }
 
