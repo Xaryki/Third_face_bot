@@ -155,34 +155,7 @@ function drawHat2(detections){
   }
 }
 
-function capturePhoto2() {
-    const videoElement = document.getElementById('video');
-    const canvas = document.createElement('canvas');
-    canvas.width = videoElement.videoWidth;
-    canvas.height = videoElement.videoHeight;
 
-    const ctx = canvas.getContext('2d');
-    // Рисуем изображение
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-    // Создаём объект изображения для маски
-    const maskImage = new Image();
-    maskImage.src = 'hat.png'; // Укажите путь к файлу маски
-
-    // Убедитесь, что маска загружена перед рисованием
-    maskImage.onload = function() {
-        // Наложение маски
-        ctx.drawImage(maskImage, 0, 0, canvas.width, canvas.height);
-
-        // Конвертация в Base64
-        const base64Image = canvas.toDataURL('image/png');
-
-        // Удаление префикса Base64
-        const base64Data = base64Image.split(',')[1];
-
-        return base64Data;
-    };
-}
 
 function capturePhoto() {
     const videoElement = document.getElementById('video');
