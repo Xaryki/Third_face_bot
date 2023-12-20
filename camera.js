@@ -155,7 +155,7 @@ function drawHat2(detections){
   }
 }
 
-function capturePhoto() {
+function capturePhoto2() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
     canvas.width = videoElement.videoWidth;
@@ -184,7 +184,7 @@ function capturePhoto() {
     };
 }
 
-function capturePhoto2() {
+function capturePhoto() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
 
