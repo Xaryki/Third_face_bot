@@ -1,6 +1,6 @@
 document.getElementById('captureButton').addEventListener('click', () => {
 
-    let base64Data = "";
+    let base64Data = capturePhoto();
     const apiUrl = 'http://81.94.159.98:8000/api/v1/send/photo';
     let image = base64Data;
     const postData = {
