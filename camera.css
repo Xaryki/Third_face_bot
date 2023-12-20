@@ -8,9 +8,7 @@ body {
 }
 
 #canvas {
-  position: absolute;
-  border: 3px #fff solid;
-  border-radius: 10px;
+  position: relative;
   z-index: 1;
 }
 
