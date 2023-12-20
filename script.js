@@ -47,7 +47,7 @@ function selectStyle(styleNumber) {
 document.getElementById('takePhoto').addEventListener('click', function() {
     window.location.href = 'camera.html?';
     document.getElementById('cameraSlide').style.display = 'block';
-
+}
 
 
 
