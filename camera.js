@@ -157,35 +157,13 @@ function drawHat2(detections){
 
 
 
-
 function capturePhoto() {
     const videoElement = document.getElementById('video');
-    const maskCanvas = ...; // Получение холста с маской
-    const canvas = document.createElement('canvas');
-
-    const ctx = canvas.getContext('2d');
-    // Рисуем изображение
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-    // Наложение маски
-    ctx.drawImage(maskCanvas, 0, 0, canvas.width, canvas.height);
-
-    // Конвертация в Base64 
-    const base64Image = canvas.toDataURL('image/png');
-
-    // Удаление префикса Base64
-    const base64Data = base64Image.split(',')[1];
-
-    return base64Data;
-}
-
-
-
-function capturePhoto2() {
-    const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
 
     const ctx = canvas.getContext('2d');
     ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
 
     // Конвертация в Base64 
     const base64Image = canvas.toDataURL('image/png');
