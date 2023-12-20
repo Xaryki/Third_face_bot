@@ -1,7 +1,7 @@
 document.getElementById('captureButton').addEventListener('click', () => {
 
     let base64Data = capturePhoto();
-    const apiUrl = 'https://borisenko-ivan.online/api/v1/send/photo';
+    const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
     let image = base64Data;
     const postData = {
     // uuid: 1277274408,
