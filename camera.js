@@ -1,6 +1,6 @@
 document.getElementById('captureButton').addEventListener('click', () => {
 
-    let base64Data = capturePhoto();
+    let base64Data = capturePhoto3();
     const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
     let image = base64Data;
     const postData = {
@@ -176,23 +176,33 @@ function capturePhoto() {
 }
 
 
-
-
-function capturePhoto2() {
+function capturePhoto3() {
     const videoElement = document.getElementById('video');
-    const canvas = document.createElement('canvas');
+    const canvas = document.getElementById('video');
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+    const context = canvas.getContext('2d');
 
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-    //ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+    // Захватываем кадр из видеопотока
+    context.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
 
-    // Конвертация в Base64 
-    const base64Image = canvas.toDataURL('image/png');
+    for (let i = 0; i < detections.length; i++) {
+    let {_x, _y, _width, _height} = detections[i].alignedRect._box;
 
-    // Удаление префикса Base64
-    const base64Data = base64Image.split(',')[1];
+    // Расчет размера и позиции шляпы
+    let hatWidth = _width * 1.5;
+    let hatHeight = hatWidth * 1; // Примерное соотношение ширины к высоте
+    let hatX = _x - hatWidth * 0.3;
+    let hatY = _y - hatHeight * 0.4; // Смещение шляпы вверх от головы
 
-    return base64Data;
+    // Отрисовка шляпы
+    context.drawImage(hatImg, hatX, hatY, hatWidth, hatHeight);
+     }
+
+
+    // Преобразуем изображение в base64
+    return canvas.toDataURL('image/jpeg', 1).split(',')[1];
+
 }
 
 
