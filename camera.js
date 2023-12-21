@@ -4,11 +4,17 @@ document.getElementById('captureButton').addEventListener('click', () => {
     //capturePhoto2();
     let base64String1 = capturePhoto(); // Ваш первый Base64 файл
     let base64String2 = capturePhoto2(); // Ваш второй Base64 файл
+    //console.log(base64String1);
+    //console.log(base64String2);
+    // Преобразование в Uint8Array
+    let uint8Array1 = base64ToUint8Array(base64String1);
+    let uint8Array2 = base64ToUint8Array(base64String2);
+  
     // Объединение массивов
     let concatenatedArray = concatenateUint8Arrays(uint8Array1, uint8Array2);
 
     // Преобразование обратно в Base64, если необходимо
-    let concatenatedBase64 = uint8ArrayToBase64(concatenatedArray);
+    //let concatenatedBase64 = uint8ArrayToBase64(concatenatedArray);
     console.log(concatenatedBase64);
     const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
     let image = base64Data;
@@ -44,15 +50,25 @@ document.getElementById('captureButton').addEventListener('click', () => {
     xhr.send(postDataJSON);
 });
 
+function cleanBase64String(base64) {
+    // Удаление пробельных символов
+    return base64.trim();
+}
+
 function base64ToUint8Array(base64) {
-    var raw = atob(base64);
+    base64 = cleanBase64String(base64); // Очистка строки от пробельных символов
+    try {
+        var raw = atob(base64);
+    } catch (e) {
+        console.error("Ошибка декодирования Base64: ", e);
+        return null;
+    }
     var uint8Array = new Uint8Array(raw.length);
     for (var i = 0; i < raw.length; i++) {
         uint8Array[i] = raw.charCodeAt(i);
     }
     return uint8Array;
 }
-
 function concatenateUint8Arrays(array1, array2) {
     var result = new Uint8Array(array1.length + array2.length);
     result.set(array1, 0);
@@ -218,9 +234,11 @@ function capturePhoto2() {
     const base64Data = base64Image.split(',')[1];
     // Выводим строку Base64 в консоль
     //console.log(base64Data);
+    return base64Data;
   } else {
     console.log('Канвас не найден');
   }
+  
 }
 
 
