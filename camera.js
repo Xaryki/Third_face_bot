@@ -185,29 +185,8 @@ function capturePhoto2() {
 
     // Сначала рисуем видеопоток
     ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
+    ctx.drawImage(hatImg, 0, 0, 100, 100);
 
-    // Затем рисуем шляпу
-    detections.forEach(detection => {
-        let {_x, _y, _width, _height} = detection.alignedRect._box;
-
-        let hatWidth, hatHeight, hatX, hatY;
-        if (styleNumber === '1') {
-            // Параметры для стиля 1
-            hatWidth = _width * 1.5;
-            hatHeight = hatWidth;
-            hatX = _x - hatWidth * 0.3;
-            hatY = _y - hatHeight * 0.4;
-        } else if (styleNumber === '2') {
-            // Параметры для стиля 2
-            hatWidth = _width * 3;
-            hatHeight = hatWidth * 0.6;
-            hatX = _x - hatWidth * 0.35;
-            hatY = _y - hatHeight * 0.5;
-        }
-
-        // Отрисовка шляпы
-        ctx.drawImage(hatImg, hatX, hatY, hatWidth, hatHeight);
-    });
 
     // Конвертация в Base64
     const base64Image = canvas.toDataURL('image/png', 1);
