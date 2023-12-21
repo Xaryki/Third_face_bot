@@ -62,12 +62,12 @@ function preload() {
 
 function setup() {
 
-  canvas = createCanvas(640, 480);
+  canvas = createCanvas(windowWidth, windowHeight);
   canvas.id("canvas");
 
   video = createCapture(VIDEO);
   video.id("video");
-  video.size(640, 480);
+  video.size(width, height);
 
   const faceOptions = {
     withLandmarks: true,
