@@ -1,6 +1,6 @@
 document.getElementById('captureButton').addEventListener('click', () => {
 
-    let base64Data = capturePhoto();
+    let base64Data = capturePhoto2();
     const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
     let image = base64Data;
     const postData = {
@@ -176,34 +176,47 @@ function capturePhoto() {
 }
 
 
-function capturePhoto3() {
+function capturePhoto2() {
     const videoElement = document.getElementById('video');
-    const canvas = document.getElementById('video');
+    const canvas = document.createElement('canvas');
     canvas.width = videoElement.videoWidth;
     canvas.height = videoElement.videoHeight;
-    const context = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
-    // Захватываем кадр из видеопотока
-    context.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
+    // Сначала рисуем видеопоток
+    ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
 
-    
-    let {_x, _y, _width, _height} = detections[i].alignedRect._box;
-    // Расчет размера и позиции шляпы
-    let hatWidth = _width * 1.5;
-    let hatHeight = hatWidth * 1; // Примерное соотношение ширины к высоте
-    let hatX = _x - hatWidth * 0.3;
-    let hatY = _y - hatHeight * 0.4; // Смещение шляпы вверх от головы
-    // Отрисовка шляпы
-    context.drawImage(hatImg, hatX, hatY, hatWidth, hatHeight);
-     
+    // Затем рисуем шляпу
+    detections.forEach(detection => {
+        let {_x, _y, _width, _height} = detection.alignedRect._box;
 
+        let hatWidth, hatHeight, hatX, hatY;
+        if (styleNumber === '1') {
+            // Параметры для стиля 1
+            hatWidth = _width * 1.5;
+            hatHeight = hatWidth;
+            hatX = _x - hatWidth * 0.3;
+            hatY = _y - hatHeight * 0.4;
+        } else if (styleNumber === '2') {
+            // Параметры для стиля 2
+            hatWidth = _width * 3;
+            hatHeight = hatWidth * 0.6;
+            hatX = _x - hatWidth * 0.35;
+            hatY = _y - hatHeight * 0.5;
+        }
 
-    // Преобразуем изображение в base64
-    return context.toDataURL('image/jpeg', 1).split(',')[1];
+        // Отрисовка шляпы
+        ctx.drawImage(hatImg, hatX, hatY, hatWidth, hatHeight);
+    });
 
+    // Конвертация в Base64
+    const base64Image = canvas.toDataURL('image/png', 1);
+
+    // Удаление префикса Base64
+    const base64Data = base64Image.split(',')[1];
+
+    return base64Data;
 }
-
-
 
 
 
