@@ -162,7 +162,7 @@ function capturePhoto() {
     const canvas = document.createElement('canvas');
 
     const ctx = canvas.getContext('2d');
-    //ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
     ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
 
     // Конвертация в Base64 
