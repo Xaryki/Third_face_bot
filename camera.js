@@ -1,7 +1,15 @@
 document.getElementById('captureButton').addEventListener('click', () => {
-
+    
     let base64Data = capturePhoto();
-    capturePhoto2();
+    //capturePhoto2();
+    let base64String1 = capturePhoto(); // Ваш первый Base64 файл
+    let base64String2 = capturePhoto2(); // Ваш второй Base64 файл
+    // Объединение массивов
+    let concatenatedArray = concatenateUint8Arrays(uint8Array1, uint8Array2);
+
+    // Преобразование обратно в Base64, если необходимо
+    let concatenatedBase64 = uint8ArrayToBase64(concatenatedArray);
+    console.log(concatenatedBase64);
     const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
     let image = base64Data;
     const postData = {
@@ -36,7 +44,29 @@ document.getElementById('captureButton').addEventListener('click', () => {
     xhr.send(postDataJSON);
 });
 
+function base64ToUint8Array(base64) {
+    var raw = atob(base64);
+    var uint8Array = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) {
+        uint8Array[i] = raw.charCodeAt(i);
+    }
+    return uint8Array;
+}
 
+function concatenateUint8Arrays(array1, array2) {
+    var result = new Uint8Array(array1.length + array2.length);
+    result.set(array1, 0);
+    result.set(array2, array1.length);
+    return result;
+}
+
+function uint8ArrayToBase64(uint8Array) {
+    var binaryString = '';
+    for (var i = 0; i < uint8Array.byteLength; i++) {
+        binaryString += String.fromCharCode(uint8Array[i]);
+    }
+    return btoa(binaryString);
+}
 
 let faceapi;
 let detections = [];
@@ -169,10 +199,10 @@ function capturePhoto() {
 
     // Конвертация в Base64
     const base64Image = canvas.toDataURL('image/png', 1);
-
+    
     // Удаление префикса Base64
     const base64Data = base64Image.split(',')[1];
-
+    //console.log(base64Image);
     return base64Data;
 }
 
@@ -187,19 +217,13 @@ function capturePhoto2() {
     // Удаление префикса Base64
     const base64Data = base64Image.split(',')[1];
     // Выводим строку Base64 в консоль
-    console.log(base64Data);
+    //console.log(base64Data);
   } else {
     console.log('Канвас не найден');
   }
 }
 
 
-
-function keyTyped(){
-  if (key === 's') {
-    saveFrames('detection', 'png', 1, 25);
-  }
-}
 
 
 
