@@ -195,5 +195,14 @@ function capturePhoto2() {
 
 
 
+function keyTyped(){
+  if (key === 's') {
+    saveFrames('detection', 'png', 1, 25);
+  }
+}
+
+
+
+
 
 
