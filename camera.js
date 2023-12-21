@@ -185,7 +185,8 @@ function capturePhoto2() {
 
     // Сначала рисуем видеопоток
     ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
-    ctx.drawImage(hatImg, 0, 0, 100, 100);
+    hatImg = loadImage('hat.png');
+    ctx.drawImage(hatImg, 100, 100, );
 
 
     // Конвертация в Base64
