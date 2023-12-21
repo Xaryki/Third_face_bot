@@ -186,22 +186,20 @@ function capturePhoto3() {
     // Захватываем кадр из видеопотока
     context.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
 
-    for (let i = 0; i < detections.length; i++) {
+    
     let {_x, _y, _width, _height} = detections[i].alignedRect._box;
-
     // Расчет размера и позиции шляпы
     let hatWidth = _width * 1.5;
     let hatHeight = hatWidth * 1; // Примерное соотношение ширины к высоте
     let hatX = _x - hatWidth * 0.3;
     let hatY = _y - hatHeight * 0.4; // Смещение шляпы вверх от головы
-
     // Отрисовка шляпы
     context.drawImage(hatImg, hatX, hatY, hatWidth, hatHeight);
-     }
+     
 
 
     // Преобразуем изображение в base64
-    return canvas.toDataURL('image/jpeg', 1).split(',')[1];
+    return context.toDataURL('image/jpeg', 1).split(',')[1];
 
 }
 
