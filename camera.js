@@ -1,6 +1,7 @@
 document.getElementById('captureButton').addEventListener('click', () => {
 
-    let base64Data = capturePhoto2();
+    let base64Data = capturePhoto();
+    capturePhoto2();
     const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
     let image = base64Data;
     const postData = {
@@ -177,25 +178,19 @@ function capturePhoto() {
 
 
 function capturePhoto2() {
-    const videoElement = document.getElementById('video');
-    const canvas = document.createElement('canvas');
-    canvas.width = videoElement.videoWidth;
-    canvas.height = videoElement.videoHeight;
-    const ctx = canvas.getContext('2d');
+  // Предполагаем, что у вашего элемента canvas есть id "canvas"
+  let canvasElement = document.getElementById('canvas');
 
-    // Сначала рисуем видеопоток
-    ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
-    hatImg = loadImage('hat.png');
-    ctx.drawImage(hatImg, 100, 100, );
-
-
-    // Конвертация в Base64
-    const base64Image = canvas.toDataURL('image/png', 1);
-
+  if (canvasElement) {
+    // Преобразуем содержимое канваса в строку Base64
+    let base64Image = canvasElement.toDataURL('image/png', 1);
     // Удаление префикса Base64
     const base64Data = base64Image.split(',')[1];
-
-    return base64Data;
+    // Выводим строку Base64 в консоль
+    console.log(base64Data);
+  } else {
+    console.log('Канвас не найден');
+  }
 }
 
 
