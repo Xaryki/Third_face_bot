@@ -95,7 +95,7 @@ function gotFaces(error, result) {
   detections = result;　//Now all the data in this detections
 
   clear();//Draw transparent background;
-  //drawLandmarks(detections);//// Draw all the face points:
+  drawLandmarks(detections);//// Draw all the face points:
 
   // Вставьте вызов функции здесь
     if (styleNumber === '1') {
