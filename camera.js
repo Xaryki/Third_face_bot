@@ -160,6 +160,27 @@ function drawHat2(detections){
 function capturePhoto() {
     const videoElement = document.getElementById('video');
     const canvas = document.createElement('canvas');
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth , videoElement.videoHeight);
+    //ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+
+    // Конвертация в Base64
+    const base64Image = canvas.toDataURL('image/png', 1);
+
+    // Удаление префикса Base64
+    const base64Data = base64Image.split(',')[1];
+
+    return base64Data;
+}
+
+
+
+
+function capturePhoto2() {
+    const videoElement = document.getElementById('video');
+    const canvas = document.createElement('canvas');
 
     const ctx = canvas.getContext('2d');
     ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
