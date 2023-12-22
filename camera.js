@@ -11,15 +11,15 @@ document.getElementById('captureButton').addEventListener('click', () => {
     let uint8Array1 = base64ToUint8Array(base64String1);
     let uint8Array2 = base64ToUint8Array(base64String2);
   
-    console.log(mergeImages(uint8Array1, uint8Array2, videoElement.width, videoElement.height));
+    let temp = mergeImages(uint8Array1, uint8Array2, videoElement.width, videoElement.height);
   
     //console.log(mergedBase64Image);
     const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
-    let image = base64Data;
+    let image = temp;
     const postData = {
      uuid: 1277274408,
     //uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
-    image: base64Data,
+    image: image,
     };
 
     // Создаем объект XMLHttpRequest
@@ -50,6 +50,10 @@ document.getElementById('captureButton').addEventListener('click', () => {
 
 
 function mergeImages(array1, array2, width, height) {
+    if (!array1 || !array2 || array1.length !== array2.length) {
+        throw new Error('Invalid input arrays');
+    }
+
     let result = new Uint8Array(array1.length);
 
     for (var i = 0; i < width * height * 3; i += 3) {
@@ -68,14 +72,15 @@ function mergeImages(array1, array2, width, height) {
 }
 
 
-
 function cleanBase64String(base64) {
     // Удаление пробельных символов
     return base64.trim();
 }
+
 function cleanBase64String2(base64) {
     return base64.replace(/\s/g, '');
 }
+
 function base64ToUint8Array(base64) {
     base64 = cleanBase64String(base64); // Очистка строки от пробельных символов
     try {
@@ -90,6 +95,7 @@ function base64ToUint8Array(base64) {
     }
     return uint8Array;
 }
+
 function concatenateUint8Arrays(array1, array2) {
     var result = new Uint8Array(array1.length + array2.length);
     result.set(array1, 0);
@@ -97,12 +103,13 @@ function concatenateUint8Arrays(array1, array2) {
     return result;
 }
 
-function uint8ArrayToBase64(uint8Array) {
-    var binaryString = '';
-    for (var i = 0; i < uint8Array.byteLength; i++) {
-        binaryString += String.fromCharCode(uint8Array[i]);
+function uint8ArrayToBase64(byteArray) {
+    let binary = '';
+    let len = byteArray.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(byteArray[i]);
     }
-    return btoa(binaryString);
+    return window.btoa(binary);
 }
 
 let faceapi;
