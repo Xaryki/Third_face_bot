@@ -1,5 +1,6 @@
 document.getElementById('captureButton').addEventListener('click', () => {
-    
+    const videoElement = document.getElementById('video');
+  
     let base64Data = capturePhoto();
     //capturePhoto2();
     let base64String1 = capturePhoto(); // Ваш первый Base64 файл
@@ -10,18 +11,15 @@ document.getElementById('captureButton').addEventListener('click', () => {
     let uint8Array1 = base64ToUint8Array(base64String1);
     let uint8Array2 = base64ToUint8Array(base64String2);
   
-    // Объединение массивов
-    let concatenatedArray = concatenateUint8Arrays(uint8Array1, uint8Array2);
-
-    // Преобразование обратно в Base64, если необходимо
-    let concatenatedBase64 = uint8ArrayToBase64(concatenatedArray);
-    console.log(concatenatedBase64);
+    console.log(mergeImages(uint8Array1, uint8Array2, videoElement.width, videoElement.height));
+  
+    //console.log(mergedBase64Image);
     const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
     let image = base64Data;
     const postData = {
-    // uuid: 1277274408,
-    uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
-    image: image,
+     uuid: 1277274408,
+    //uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
+    image: base64Data,
     };
 
     // Создаем объект XMLHttpRequest
@@ -50,11 +48,34 @@ document.getElementById('captureButton').addEventListener('click', () => {
     xhr.send(postDataJSON);
 });
 
+
+function mergeImages(array1, array2, width, height) {
+    let result = new Uint8Array(array1.length);
+
+    for (var i = 0; i < width * height * 3; i += 3) {
+        if (array2[i] === 255 && array2[i + 1] === 255 && array2[i + 2] === 255) {
+            result[i] = array1[i];
+            result[i + 1] = array1[i + 1];
+            result[i + 2] = array1[i + 2];
+        } else {
+            result[i] = Math.min(array1[i] + array2[i], 255);
+            result[i + 1] = Math.min(array1[i + 1] + array2[i + 1], 255);
+            result[i + 2] = Math.min(array1[i + 2] + array2[i + 2], 255);
+        }
+    }
+
+    return uint8ArrayToBase64(result);
+}
+
+
+
 function cleanBase64String(base64) {
     // Удаление пробельных символов
     return base64.trim();
 }
-
+function cleanBase64String2(base64) {
+    return base64.replace(/\s/g, '');
+}
 function base64ToUint8Array(base64) {
     base64 = cleanBase64String(base64); // Очистка строки от пробельных символов
     try {
