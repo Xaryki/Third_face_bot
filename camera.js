@@ -132,15 +132,16 @@ function drawHat(detections){
   }
 }
 
+
 function drawHat2(detections){
   for (let i = 0; i < detections.length; i++) {
     let {_x, _y, _width, _height} = detections[i].alignedRect._box;
 
     // Расчет размера и позиции шляпы
-    let hatWidth = _width * 1.5;
-    let hatHeight = hatWidth * 1; // Примерное соотношение ширины к высоте
-    let hatX = _x - hatWidth * 0.3;
-    let hatY = _y - hatHeight * 0.4; // Смещение шляпы вверх от головы
+    let hatWidth = _width * 3.3;
+    let hatHeight = hatWidth * 0.9; // Примерное соотношение ширины к высоте
+    let hatX = _x - hatWidth * 0.35;
+    let hatY = _y - hatHeight * 0.5; // Смещение шляпы вверх от головы
 
     // Отрисовка шляпы
     image(hatImg, hatX, hatY, hatWidth, hatHeight);
