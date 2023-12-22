@@ -14,7 +14,7 @@ document.getElementById('captureButton').addEventListener('click', () => {
     let concatenatedArray = concatenateUint8Arrays(uint8Array1, uint8Array2);
 
     // Преобразование обратно в Base64, если необходимо
-    //let concatenatedBase64 = uint8ArrayToBase64(concatenatedArray);
+    let concatenatedBase64 = uint8ArrayToBase64(concatenatedArray);
     console.log(concatenatedBase64);
     const apiUrl = 'https://borisenko-ivan.online:443/api/v1/send/photo';
     let image = base64Data;
