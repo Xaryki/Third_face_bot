@@ -1,23 +1,3 @@
-window.onload = function() {
-  resizeCanvas(document.getElementById('сanvas'), document.getElementById('video'));
-};
-
-function resizeCanvas(canvas, videoElement) {
-  let videoAspectRatio = videoElement.videoWidth / videoElement.videoHeight;
-  let windowAspectRatio = window.innerWidth / window.innerHeight;
-
-  if (windowAspectRatio < videoAspectRatio) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerWidth / videoAspectRatio;
-  } else {
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerHeight * videoAspectRatio;
-  }
-
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
-}
-
 document.getElementById('captureButton').addEventListener('click', () => {
 
     //let base64Data = capturePhoto();
