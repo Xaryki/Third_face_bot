@@ -9,16 +9,16 @@ body {
 
 #canvas {
   position: relative;
-  width: 80%;
-  height: 80%;
+  width: 100%; /* Занимает всю ширину контейнера */
+  height: 100%; /* Занимает всю высоту контейнера */
   object-fit: contain;
   z-index: 1;
 }
 
 #video {
   position: absolute;
-  width: 80%;
-  height: 80%;
+  width: 100%; /* Занимает всю ширину контейнера */
+  height: 100%; /* Занимает всю высоту контейнера */
   object-fit: contain;
   z-index: 0;
   border: 3px #fff solid;
