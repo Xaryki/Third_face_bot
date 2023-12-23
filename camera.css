@@ -9,7 +9,7 @@ body {
 
 #canvas {
   position: relative;
-  width: 100%;
+  width: 80%;
   height: auto;
   object-fit: contain;
   z-index: 1;
@@ -17,7 +17,7 @@ body {
 
 #video {
   position: absolute;
-  width: 100%;
+  width: 80%;
   height: auto;
   object-fit: contain;
   z-index: 0;
@@ -40,10 +40,4 @@ button {
 
 button:hover {
   background-color: #000099; /* Измененный цвет при наведении */
-}
-
-#canvas, #video {
-  width: 100%; /* ширина элемента равна ширине родительского элемента */
-  height: auto; /* высота элемента изменяется автоматически для сохранения пропорций */
-  object-fit: contain; /* гарантирует, что содержимое будет полностью видно, с сохранением пропорций */
 }
