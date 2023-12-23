@@ -10,7 +10,7 @@ body {
 #canvas {
   position: relative;
   width: 80%;
-  height: auto;
+  height: 80%;
   object-fit: contain;
   z-index: 1;
 }
@@ -18,7 +18,7 @@ body {
 #video {
   position: absolute;
   width: 80%;
-  height: auto;
+  height: 80%;
   object-fit: contain;
   z-index: 0;
   border: 3px #fff solid;
