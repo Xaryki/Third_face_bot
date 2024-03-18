@@ -202,7 +202,7 @@ function takeScreenshotAndSend() {
     ctx.drawImage(videoElement, 0, 0, 480, 360);
     drawHat2(detections);
 
-    console.log(canvasElement.toDataURL('image/png'));
+    //console.log(canvasElement.toDataURL('image/png'));
     return canvasElement.toDataURL('image/png').split(',')[1];
 }
 
