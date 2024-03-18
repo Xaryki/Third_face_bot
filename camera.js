@@ -1,43 +1,49 @@
 document.getElementById('captureButton').addEventListener('click', () => {
+    // Функция для отправки данных на сервер
+    const sendDataToServer = () => {
+        const apiUrl = 'https://borisenko-ivan.online/api/v1/send/photo';
+        
+        // Проверяем наличие ID пользователя в Telegram WebApp
+        if (window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user && window.Telegram.WebApp.initDataUnsafe.user.id) {
+            const userId = window.Telegram.WebApp.initDataUnsafe.user.id;
+            
+            // Данные для отправки на сервер
+            const postData = {
+                uuid: userId,
+                image: takeScreenshotAndSend(), // Предполагается, что takeScreenshotAndSend() возвращает base64 изображения
+            };
 
-    //let base64Data = capturePhoto();
-    //let base64Data2 = capturePhoto2();
+            // Создаем объект XMLHttpRequest
+            const xhr = new XMLHttpRequest();
 
-    //takeScreenshotAndSend();
+            // Устанавливаем метод запроса и URL
+            xhr.open('POST', apiUrl, true);
 
-    const apiUrl = 'https://borisenko-ivan.online/api/v1/send/photo';
-    const postData = {
-    uuid: 1277274408,
-    //uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
-    image: takeScreenshotAndSend(),
-    };
+            // Устанавливаем заголовок Content-Type
+            xhr.setRequestHeader('Content-Type', 'application/json');
 
-    // Создаем объект XMLHttpRequest
-    const xhr = new XMLHttpRequest();
+            // Обработчик события готовности запроса
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    // Проверяем статус ответа
+                    if (xhr.status === 200) {
+                        console.log('Успешный ответ от сервера:', xhr.responseText);
+                    } else {
+                        console.error('Ошибка при отправке запроса. Статус:', xhr.status);
+                    }
+                }
+            };
 
-    // Устанавливаем метод запроса и URL
-    xhr.open('POST', apiUrl, true);
-
-    // Устанавливаем заголовок Content-Type
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    //xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); 
-    // Обработчик события готовности запроса
-    xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-        // Проверяем статус ответа
-        if (xhr.status === 200) {
-        console.log('Успешный ответ от сервера:', xhr.responseText);
+            // Преобразуем объект postData в JSON и отправляем в теле запроса
+            const postDataJSON = JSON.stringify(postData);
+            xhr.send(postDataJSON);
         } else {
-        console.error('Ошибка при отправке запроса. Статус:', xhr.status);
+            console.error('ID пользователя не найден. Невозможно отправить данные на сервер.');
         }
-    }
     };
 
-    // Преобразуем объект postData в JSON и отправляем в теле запроса
-    const postDataJSON = JSON.stringify(postData);
-    xhr.send(postDataJSON);
+    sendDataToServer(); // Вызываем функцию для отправки данных на сервер при клике на кнопку захвата изображения
 });
-
 
 
 let faceapi;
