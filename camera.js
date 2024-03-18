@@ -20,7 +20,7 @@ document.getElementById('captureButton').addEventListener('click', () => {
 
     // Устанавливаем заголовок Content-Type
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); 
+    //xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); 
     // Обработчик события готовности запроса
     xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
