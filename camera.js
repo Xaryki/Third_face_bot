@@ -7,8 +7,8 @@ document.getElementById('captureButton').addEventListener('click', () => {
 
     const apiUrl = 'https://borisenko-ivan.online/api/v1/send/photo/';
     const postData = {
-    //uuid: 1277274408,
-    uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
+    uuid: 1277274408,
+    //uuid: window.Telegram.WebApp.initDataUnsafe.user.id,
     image: takeScreenshotAndSend(),
     };
 
