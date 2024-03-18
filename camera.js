@@ -21,6 +21,9 @@ document.getElementById('captureButton').addEventListener('click', () => {
     // Устанавливаем заголовок Content-Type
     xhr.setRequestHeader('Content-Type', 'application/json');
 
+    // Отключаем проверку CORS
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+
     // Обработчик события готовности запроса
     xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
