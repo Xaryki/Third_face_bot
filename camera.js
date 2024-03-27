@@ -77,15 +77,15 @@ function updateHeights() {
 
 function setup() {
 
-  //canvas = createCanvas(480, 360);
-  //canvas.id("canvas");
+  canvas = createCanvas(480, 360);
+  canvas.id("canvas");
 
-  //video = createCapture(VIDEO);
-  //video.id("video");
-  //video.size(480, 360);
+  video = createCapture(VIDEO);
+  video.id("video");
+  video.size(480, 360);
 
   // Call the updateHeights function initially
-  updateHeights();
+  //updateHeights();
   
   const faceOptions = {
     withLandmarks: true,
