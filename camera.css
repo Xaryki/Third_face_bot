@@ -1,5 +1,5 @@
 body {
-  background-color: #ff0000; /* Красный фон */
+  background-color: #ff0000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,16 +9,16 @@ body {
 
 #canvas {
   position: relative;
-  width: 100%; /* Занимает всю ширину контейнера */
-  height: 100%; /* Занимает всю высоту контейнера */
+  width: 100%;
+  height: calc(100vh - 60px); /* Adjust the height based on the viewportStableHeight */
   object-fit: contain;
   z-index: 1;
 }
 
 #video {
   position: absolute;
-  width: 100%; /* Занимает всю ширину контейнера */
-  height: 100%; /* Занимает всю высоту контейнера */
+  width: 100%;
+  height: calc(100vh - 60px); /* Adjust the height based on the viewportStableHeight */
   object-fit: contain;
   z-index: 0;
   border: 3px #fff solid;
@@ -28,16 +28,16 @@ body {
 button {
   padding: 10px 20px;
   font-size: 18px;
-  background-color: #0000ff; /* Синий цвет */
+  background-color: #0000ff;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  position: absolute; /* Используем абсолютное позиционирование */
-  bottom: 20px; /* Располагаем кнопку внизу */
+  position: absolute;
+  bottom: 20px;
   z-index: 2;
 }
 
 button:hover {
-  background-color: #000099; /* Измененный цвет при наведении */
+  background-color: #000099;
 }
