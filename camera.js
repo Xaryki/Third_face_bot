@@ -1,4 +1,6 @@
 document.getElementById('captureButton').addEventListener('click', () => {
+    // Listen for the viewportChanged event and update the heights accordingly
+    //Telegram.WebApp.onEvent('viewportChanged', updateHeights);
     // Функция для отправки данных на сервер
     const sendDataToServer = () => {
         const apiUrl = 'https://borisenko-ivan.online/api/v1/send/photo';
@@ -65,15 +67,26 @@ function preload() {
 }
 
 
+// Function to update the heights based on the viewportStableHeight
+function updateHeights() {
+  var stableHeight = Telegram.WebApp.viewportStableHeight;
+  canvas.style.height = (stableHeight - 60) + 'px';
+  video.style.height = (stableHeight - 60) + 'px';
+}
+
+
 function setup() {
 
-  canvas = createCanvas(480, 360);
-  canvas.id("canvas");
+  //canvas = createCanvas(480, 360);
+  //canvas.id("canvas");
 
-  video = createCapture(VIDEO);
-  video.id("video");
-  video.size(480, 360);
+  //video = createCapture(VIDEO);
+  //video.id("video");
+  //video.size(480, 360);
 
+  // Call the updateHeights function initially
+  updateHeights();
+  
   const faceOptions = {
     withLandmarks: true,
     withExpressions: true,
