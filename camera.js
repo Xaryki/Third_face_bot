@@ -67,14 +67,6 @@ function preload() {
 }
 
 
-// Function to update the heights based on the viewportStableHeight
-function updateHeights() {
-  var stableHeight = Telegram.WebApp.viewportStableHeight;
-  canvas.style.height = (stableHeight - 60) + 'px';
-  video.style.height = (stableHeight - 60) + 'px';
-}
-
-
 function setup() {
 
   canvas = createCanvas(480, 360);
@@ -134,23 +126,6 @@ function drawLandmarks(detections){
   }
 }
 
-
-
-function drawHat(detections){
-  for (let i = 0; i < detections.length; i++) {
-    let {_x, _y, _width, _height} = detections[i].alignedRect._box;
-
-    // Расчет размера и позиции шляпы
-    let hatWidth = _width * 3;
-    let hatHeight = hatWidth * 0.6; // Примерное соотношение ширины к высоте
-    let hatX = _x - hatWidth * 0.35;
-    let hatY = _y - hatHeight * 0.5; // Смещение шляпы вверх от головы
-
-    // Отрисовка шляпы
-    image(hatImg, hatX, hatY, hatWidth, hatHeight);
-  }
-}
-
 function drawHat2(detections){
   for (let i = 0; i < detections.length; i++) {
     let {_x, _y, _width, _height} = detections[i].alignedRect._box;
@@ -165,43 +140,6 @@ function drawHat2(detections){
     image(hatImg, hatX, hatY, hatWidth, hatHeight);
   }
 }
-function capturePhoto() {
-    const videoElement = document.getElementById('video');
-    const canvas = document.createElement('canvas');
-    canvas.width = videoElement.videoWidth;
-    canvas.height = videoElement.videoHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth , videoElement.videoHeight);
-    //ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-
-    // Конвертация в Base64
-    const base64Image = canvas.toDataURL('image/png', 1);
-
-    // Удаление префикса Base64
-    const base64Data = base64Image.split(',')[1];
-    //console.log(base64Image);
-    return base64Data;
-}
-
-
-function capturePhoto2() {
-  // Предполагаем, что у вашего элемента canvas есть id "canvas"
-  let canvasElement = document.getElementById('canvas');
-
-  if (canvasElement) {
-    // Преобразуем содержимое канваса в строку Base64
-    let base64Image = canvasElement.toDataURL('image/png', 1);
-    // Удаление префикса Base64
-    const base64Data = base64Image.split(',')[1];
-    // Выводим строку Base64 в консоль
-    //console.log(base64Data);
-    return base64Data;
-  } else {
-    console.log('Канвас не найден');
-  }
-
-}
-
 
 function takeScreenshotAndSend() {
     let videoElement = document.getElementById('video');
@@ -215,10 +153,6 @@ function takeScreenshotAndSend() {
     ctx.drawImage(videoElement, 0, 0, 480, 360);
     drawHat2(detections);
 
-    //console.log(canvasElement.toDataURL('image/png'));
+    console.log(canvasElement.toDataURL('image/png'));
     return canvasElement.toDataURL('image/png').split(',')[1];
 }
-
-
-
-
