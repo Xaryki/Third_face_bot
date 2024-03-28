@@ -48,3 +48,10 @@ document.getElementById('takePhoto').addEventListener('click', function() {
     // Здесь вызывайте функцию инициализации камеры
 
 });
+
+document.getElementById('uploadPhoto').addEventListener('click', function() {
+    window.location.href = 'camera.html';
+    document.getElementById('cameraSlide').style.display = 'block';
+    // Здесь вызывайте функцию инициализации камеры
+
+});
